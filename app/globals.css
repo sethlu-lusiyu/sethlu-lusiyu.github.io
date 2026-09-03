@@ -404,24 +404,24 @@ a {
 
 .portfolio-copy h2 {
   max-width: none;
-  margin-bottom: clamp(44px, 7vh, 74px);
-  font-size: clamp(42px, 6vw, 92px);
+  margin-bottom: clamp(30px, 4vh, 44px);
+  font-size: clamp(28px, 3.4vw, 48px);
 }
 
 .portfolio-list {
   display: grid;
-  gap: 18px;
+  gap: 12px;
 }
 
 .portfolio-row {
   position: relative;
   z-index: 2;
   display: grid;
-  min-height: 142px;
+  min-height: 96px;
   grid-template-columns: 54px minmax(0, 1fr) auto;
   align-items: center;
   gap: clamp(18px, 3vw, 46px);
-  padding: 0 clamp(20px, 2.4vw, 34px);
+  padding: 0 clamp(16px, 1.8vw, 26px);
   border: 1px solid var(--hairline);
   background: rgba(8, 9, 12, 0.48);
 }
@@ -440,7 +440,7 @@ a.portfolio-row:focus-visible {
 .portfolio-row > span,
 .portfolio-meta em {
   color: var(--muted);
-  font-size: 10px;
+  font-size: 9px;
   font-style: normal;
   font-weight: 650;
   letter-spacing: 0.12em;
@@ -451,7 +451,7 @@ a.portfolio-row:focus-visible {
   display: block;
   max-width: 34ch;
   font-family: var(--font-display);
-  font-size: clamp(21px, 2.5vw, 38px);
+  font-size: clamp(15px, 1.45vw, 22px);
   font-weight: 500;
   line-height: 1.08;
   letter-spacing: -0.04em;
@@ -459,9 +459,9 @@ a.portfolio-row:focus-visible {
 
 .portfolio-row small {
   display: block;
-  margin-top: 9px;
+  margin-top: 5px;
   color: var(--secondary-ink);
-  font-size: 0.58em;
+  font-size: 0.72em;
   font-weight: 400;
   letter-spacing: -0.01em;
 }
@@ -474,20 +474,20 @@ a.portfolio-row:focus-visible {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 18px;
+  gap: 10px;
 }
 
 .portfolio-action {
   display: inline-flex;
-  min-width: 98px;
-  min-height: 36px;
+  min-width: 90px;
+  min-height: 32px;
   align-items: center;
   justify-content: center;
-  padding: 8px 14px;
+  padding: 7px 12px;
   border: 1px solid var(--amber);
   border-radius: 999px;
   color: var(--amber);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 650;
   letter-spacing: 0.08em;
 }
@@ -1596,11 +1596,11 @@ a.index-row:hover {
   }
 
   .portfolio-copy h2 {
-    margin-bottom: 36px;
+    margin-bottom: 28px;
   }
 
   .portfolio-row {
-    min-height: 132px;
+    min-height: 108px;
     grid-template-columns: 30px 1fr;
     gap: 14px;
     padding: 22px 16px;
@@ -1613,7 +1613,7 @@ a.index-row:hover {
   }
 
   .portfolio-row > strong {
-    font-size: clamp(19px, 5.8vw, 29px);
+    font-size: clamp(16px, 4.6vw, 21px);
   }
 
   .project-deck {
