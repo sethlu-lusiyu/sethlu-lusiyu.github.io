@@ -107,7 +107,6 @@ export default function Home() {
             <span className="portal-title-left">卢思宇</span>
             <span className="portal-title-right">项目集</span>
           </h1>
-          <p className="portal-title-en">SIYU LU / PORTFOLIO</p>
           <div className="portal-keywords" aria-label="研究方向">
             <span className="keyword-1">Fundamental Research</span>
             <span className="keyword-2">Quantitative Fundamentals</span>
@@ -117,7 +116,6 @@ export default function Home() {
             <span className="keyword-6">Financial Technology</span>
             <span className="keyword-7">Data-Driven</span>
           </div>
-          <div className="portal-meta portal-meta-left">PORTFOLIO / 2026</div>
           <div className="portal-meta portal-meta-right">向下滚动以展开</div>
         </div>
       </section>
@@ -132,7 +130,6 @@ export default function Home() {
           <Image src={rocketImage} alt="" fill unoptimized sizes="(max-width: 760px) 66vw, 36vw" />
         </div>
         <div className="statement-copy portfolio-copy reveal">
-          <p className="eyebrow">SELECTED WORK / 01</p>
           <h2>项目集大全</h2>
           <div className="portfolio-list">
             <Link className="portfolio-row" href="/projects/polymarket">
@@ -164,8 +161,7 @@ export default function Home() {
       <section className="closing-section">
         <div className="closing-top reveal">
           <div>
-            <p className="eyebrow">CONNECT / 02</p>
-            <p className="closing-statement">金融研究与交易的持续项目集。</p>
+            <p className="closing-statement">金融研究与交易的持续项目集</p>
           </div>
           <div className="closing-links">
             <a href="https://uk.linkedin.com/in/siyu-lu-0302a6339" target="_blank" rel="noreferrer">
@@ -178,7 +174,6 @@ export default function Home() {
         </div>
         <footer>
           <span>卢思宇（帝国理工学院 · 中央财经大学）</span>
-          <span>FINANCIAL RESEARCH / TRADING / 2026</span>
         </footer>
         <div className="closing-wordmark" aria-hidden="true">Financial Science</div>
       </section>
