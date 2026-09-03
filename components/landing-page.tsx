@@ -1,166 +1,17 @@
 'use client';
 
-// Client-side motion and deck interactions for the otherwise static landing page.
+// Client-side reveal motion for the otherwise static landing page.
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, ChevronLeft, ChevronRight, Code2, Contact } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Code2, Contact } from 'lucide-react';
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 const rocketImage = `${basePath}/rocket-flight-desktop-dark.jpg`;
 
-const projects = [
-  {
-    number: '01',
-    type: '学术研究 / Prediction Markets',
-    title: 'Luck, Skill, and Trader Heterogeneity in Prediction Markets',
-    subtitle: "Evidence from Polymarket's Crypto Markets",
-    summary: '从 2.189 亿笔链上成交中重建钱包级 PnL，并用行为聚类与三类 bootstrap 检验区分运气与技能。',
-    meta: ['653,910 钱包', '218.9M 成交', '2026'],
-    href: '/projects/polymarket',
-    status: '已完成',
-    tone: 'paper',
-  },
-  {
-    number: '02',
-    type: '研究项目 / Gold',
-    title: '黄金研究项目',
-    subtitle: '研究框架与数据产品待发布',
-    summary: '为黄金供需、定价、宏观驱动与交易信号预留的项目位置。',
-    meta: ['筹备中', 'COMING SOON'],
-    href: null,
-    status: '待发布',
-    tone: 'gold',
-  },
-] as const;
-
 function clamp(value: number) {
   return Math.min(1, Math.max(0, value));
-}
-
-function ProjectDeck() {
-  const router = useRouter();
-  const [active, setActive] = useState(0);
-  const [dragX, setDragX] = useState(0);
-  const startX = useRef<number | null>(null);
-  const didDrag = useRef(false);
-
-  const cycle = (direction: number) => {
-    setActive((current) => (current + direction + projects.length) % projects.length);
-    setDragX(0);
-  };
-
-  const openActive = () => {
-    const href = projects[active].href;
-    if (href) router.push(href);
-  };
-
-  return (
-    <div className="deck-shell">
-      <div className="project-deck" aria-live="polite">
-        {projects.map((project, index) => {
-          const distance = (index - active + projects.length) % projects.length;
-          const isActive = distance === 0;
-          return (
-            <button
-              type="button"
-              key={project.number}
-              className={`deck-card deck-card-${project.tone} ${isActive ? 'is-active' : ''}`}
-              style={
-                {
-                  '--deck-x': `${distance * 20}px`,
-                  '--deck-y': `${distance * 13}px`,
-                  '--deck-r': `${distance % 2 ? 2.8 : -1.8}deg`,
-                  '--drag-x': isActive ? `${dragX}px` : '0px',
-                  '--drag-r': isActive ? `${dragX / 22}deg` : '0deg',
-                  zIndex: projects.length - distance,
-                } as React.CSSProperties
-              }
-              aria-hidden={!isActive}
-              aria-label={`${project.title}。${project.status}。${project.href ? '按回车打开项目' : '项目暂未开放'}`}
-              tabIndex={isActive ? 0 : -1}
-              onKeyDown={(event) => {
-                if (event.key === 'ArrowRight') {
-                  event.preventDefault();
-                  cycle(1);
-                }
-                if (event.key === 'ArrowLeft') {
-                  event.preventDefault();
-                  cycle(-1);
-                }
-              }}
-              onClick={(event) => {
-                if (isActive && event.detail === 0) openActive();
-              }}
-              onPointerDown={(event) => {
-                if (!isActive) return;
-                startX.current = event.clientX;
-                didDrag.current = false;
-                event.currentTarget.setPointerCapture(event.pointerId);
-              }}
-              onPointerMove={(event) => {
-                if (!isActive || startX.current === null) return;
-                const next = event.clientX - startX.current;
-                if (Math.abs(next) > 5) didDrag.current = true;
-                setDragX(next);
-              }}
-              onPointerUp={(event) => {
-                if (!isActive || startX.current === null) return;
-                const moved = event.clientX - startX.current;
-                startX.current = null;
-                if (Math.abs(moved) > 56) cycle(moved > 0 ? -1 : 1);
-                else if (!didDrag.current) openActive();
-                else setDragX(0);
-              }}
-              onPointerCancel={() => {
-                startX.current = null;
-                setDragX(0);
-              }}
-            >
-              <div className="card-index">
-                <span>{project.number}</span>
-                <span>{project.status}</span>
-              </div>
-              <div className="card-copy">
-                <p>{project.type}</p>
-                <h3>{project.title}</h3>
-                <h4>{project.subtitle}</h4>
-                <p className="card-summary">{project.summary}</p>
-              </div>
-              <div className="card-footer">
-                <div>
-                  {project.meta.map((item) => (
-                    <span key={item}>{item}</span>
-                  ))}
-                </div>
-                <span className="card-open">{project.href ? '打开项目 ↗' : '位置预留'}</span>
-              </div>
-            </button>
-          );
-        })}
-      </div>
-
-      <div className="deck-controls">
-        <p>拖动卡片，或使用方向键切换</p>
-        <div className="deck-actions">
-          <Button className="deck-button" variant="ghost" size="icon" onClick={() => cycle(-1)} aria-label="上一个项目">
-            <ChevronLeft />
-          </Button>
-          <div className="deck-dots" aria-hidden="true">
-            {projects.map((project, index) => (
-              <span key={project.number} className={index === active ? 'is-current' : ''} />
-            ))}
-          </div>
-          <Button className="deck-button" variant="ghost" size="icon" onClick={() => cycle(1)} aria-label="下一个项目">
-            <ChevronRight />
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
 }
 
 export default function Home() {
@@ -224,9 +75,8 @@ export default function Home() {
         <nav aria-label="主导航">
           <a href="#projects">项目集大全</a>
           <a href="https://uk.linkedin.com/in/siyu-lu-0302a6339" target="_blank" rel="noreferrer">
-            领英 ↗
+            LinkedIn ↗
           </a>
-          <a className="nav-pill" href="#projects">研究 &amp; 交易</a>
         </nav>
       </header>
 
@@ -252,11 +102,21 @@ export default function Home() {
           <span className="portal-dot portal-dot-left" aria-hidden="true" />
           <span className="portal-dot portal-dot-right" aria-hidden="true" />
 
-          <p className="portal-kicker">研究 · 交易 · 数据 · 系统</p>
-          <h1 className="portal-title" aria-label="卢思宇项目集">
+          <p className="portal-kicker">金融研究 · 交易</p>
+          <h1 className="portal-title" aria-label="卢思宇项目集，Siyu Lu Portfolio">
             <span className="portal-title-left">卢思宇</span>
             <span className="portal-title-right">项目集</span>
           </h1>
+          <p className="portal-title-en">SIYU LU / PORTFOLIO</p>
+          <div className="portal-keywords" aria-label="研究方向">
+            <span className="keyword-1">Fundamental Research</span>
+            <span className="keyword-2">Quantitative Fundamentals</span>
+            <span className="keyword-3">Futures Fundamentals</span>
+            <span className="keyword-4">Multi-Asset Allocation</span>
+            <span className="keyword-5">Bridging Research &amp; Trading</span>
+            <span className="keyword-6">Financial Technology</span>
+            <span className="keyword-7">Data-Driven</span>
+          </div>
           <div className="portal-meta portal-meta-left">PORTFOLIO / 2026</div>
           <div className="portal-meta portal-meta-right">向下滚动以展开</div>
         </div>
@@ -264,71 +124,52 @@ export default function Home() {
 
       <section
         ref={statementRef}
-        className="statement-fold"
+        id="projects"
+        className="statement-fold portfolio-fold"
         style={{ '--statement-progress': statementProgress } as React.CSSProperties}
       >
         <div className="statement-orbit" aria-hidden="true">
           <Image src={rocketImage} alt="" fill unoptimized sizes="(max-width: 760px) 66vw, 36vw" />
         </div>
-        <div className="statement-copy reveal">
-          <p className="eyebrow">研究方法 / 01</p>
-          <h2>
-            把研究对象拆解为可追溯的数据、可复核的方法，和<span>可以被证伪的结论。</span>
-          </h2>
-        </div>
-        <div className="outline-number" aria-hidden="true">01</div>
-      </section>
-
-      <section id="projects" className="projects-section">
-        <div className="projects-intro reveal">
-          <p className="eyebrow">项目集合 / SELECTED WORK</p>
-          <h2>研究不是陈列，<br />而是一条可检查的证据链。</h2>
-          <p className="projects-lede">
-            从链上微观结构到商品研究，项目覆盖数据工程、实证检验与交易问题。每个条目独立维护，这里只提供清晰入口。
-          </p>
-          <div className="projects-links">
-            <Link className="text-link" href="/projects/polymarket">
-              阅读首篇研究 <ArrowUpRight />
+        <div className="statement-copy portfolio-copy reveal">
+          <p className="eyebrow">SELECTED WORK / 01</p>
+          <h2>项目集大全</h2>
+          <div className="portfolio-list">
+            <Link className="portfolio-row" href="/projects/polymarket">
+              <span>01</span>
+              <strong>
+                Luck, Skill, and Trader Heterogeneity in Prediction Markets:
+                <small>Evidence from Polymarket&apos;s Crypto Markets</small>
+              </strong>
+              <div className="portfolio-meta">
+                <em>研究论文 · 2026</em>
+                <span className="portfolio-action">点击打开 ↗</span>
+              </div>
             </Link>
-            <a className="text-link muted-link" href="https://github.com/sethlu-lusiyu" target="_blank" rel="noreferrer">
-              GitHub <Code2 />
-            </a>
+            <div className="portfolio-row is-disabled" aria-disabled="true">
+              <span>02</span>
+              <strong>
+                Gold Research Project
+                <small>Fundamentals, Valuation and Trading Signals</small>
+              </strong>
+              <div className="portfolio-meta">
+                <em>研究项目 · 待发布</em>
+                <span className="portfolio-action">尚未开放</span>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="reveal deck-reveal">
-          <ProjectDeck />
-        </div>
-      </section>
-
-      <section className="project-index" aria-labelledby="project-index-title">
-        <div className="index-heading reveal">
-          <p className="eyebrow">项目索引 / 02</p>
-          <h2 id="project-index-title">项目集大全</h2>
-        </div>
-        <Link className="index-row reveal" href="/projects/polymarket">
-          <span>01</span>
-          <strong>Prediction Markets</strong>
-          <p>运气、技能与交易者异质性</p>
-          <span>2026 ↗</span>
-        </Link>
-        <div className="index-row reveal is-disabled" aria-disabled="true">
-          <span>02</span>
-          <strong>Gold</strong>
-          <p>黄金研究项目</p>
-          <span>待发布</span>
         </div>
       </section>
 
       <section className="closing-section">
         <div className="closing-top reveal">
           <div>
-            <p className="eyebrow">继续向前 / 03</p>
-            <h2>问题会变化，证据必须留下。</h2>
-            <p>持续扩展中的研究与交易项目集。</p>
+            <p className="eyebrow">CONNECT / 02</p>
+            <p className="closing-statement">金融研究与交易的持续项目集。</p>
           </div>
           <div className="closing-links">
             <a href="https://uk.linkedin.com/in/siyu-lu-0302a6339" target="_blank" rel="noreferrer">
-              <Contact /> 领英
+              <Contact /> LinkedIn
             </a>
             <a href="https://github.com/sethlu-lusiyu" target="_blank" rel="noreferrer">
               <Code2 /> GitHub
@@ -337,9 +178,9 @@ export default function Home() {
         </div>
         <footer>
           <span>卢思宇（帝国理工学院 · 中央财经大学）</span>
-          <span>研究 &amp; 交易 / 2026</span>
+          <span>FINANCIAL RESEARCH / TRADING / 2026</span>
         </footer>
-        <div className="closing-wordmark" aria-hidden="true">卢思宇 项目集</div>
+        <div className="closing-wordmark" aria-hidden="true">Financial Science</div>
       </section>
     </main>
   );
