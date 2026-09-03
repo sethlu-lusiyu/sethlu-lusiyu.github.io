@@ -259,23 +259,11 @@ a {
   letter-spacing: 0.11em;
   pointer-events: none;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.9);
-  text-transform: uppercase;
 }
 
 .portal-keywords span {
   position: absolute;
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
   white-space: nowrap;
-}
-
-.portal-keywords span::before {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--amber);
-  content: '';
 }
 
 .keyword-1 { top: 62%; left: 7%; color: rgba(241, 147, 77, 0.88); font-size: 1.08em; }

@@ -69,7 +69,7 @@ export default function Home() {
     <main>
       <header className="site-nav">
         <a className="nav-brand" href="#top" aria-label="返回顶部">
-          卢思宇 项目集<span>·</span>
+          卢思宇 项目集
         </a>
         <p className="nav-identity">帝国理工学院 · 中央财经大学</p>
         <nav aria-label="主导航">
@@ -108,13 +108,13 @@ export default function Home() {
             <span className="portal-title-right">项目集</span>
           </h1>
           <div className="portal-keywords" aria-label="研究方向">
-            <span className="keyword-1">Fundamental Research</span>
-            <span className="keyword-2">Quantitative Fundamentals</span>
-            <span className="keyword-3">Futures Fundamentals</span>
-            <span className="keyword-4">Multi-Asset Allocation</span>
-            <span className="keyword-5">Bridging Research &amp; Trading</span>
-            <span className="keyword-6">Financial Technology</span>
-            <span className="keyword-7">Data-Driven</span>
+            <span className="keyword-1">Fundamental research</span>
+            <span className="keyword-2">Quantitative fundamentals</span>
+            <span className="keyword-3">Futures fundamentals</span>
+            <span className="keyword-4">Multi-asset allocation</span>
+            <span className="keyword-5">Bridging research &amp; trading</span>
+            <span className="keyword-6">Financial technology</span>
+            <span className="keyword-7">Data-driven</span>
           </div>
           <div className="portal-meta portal-meta-right">向下滚动以展开</div>
         </div>
